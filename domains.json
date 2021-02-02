@@ -1,0 +1,71 @@
+[{
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "cloud",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "www",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "cha0s-net",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "mail",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "imap",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "smtp",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "dns",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "archimedes",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "sld": "kderbyma",
+        "tld": "com",
+        "host": "calliope",
+        "type": "A",
+        "ttl": "100"
+    }
+]
