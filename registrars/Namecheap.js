@@ -28,21 +28,9 @@ module.exports = (() => {
   }
 
   // Set Host Command with Options Passed in
-  async function setHost(options, merger) {
-    // Params
-    var defParams = {
-      apiuser: options.user,
-      apikey: options.apikey,
-      username: options.user,
-      Command: "namecheap.domains.dns.setHosts",
-      ClientIp: options.clientIp,
-      SLD: options.sld,
-      TLD: options.tld,
-    };
-
-    var queryParams = merge(defParams, merger);
-
+  async function setQuery(merger) {
     // Stringify
+    var queryParams = merge({}, merger);
     let query = Object.keys(queryParams).map(
       (x) => "" + x + "=" + queryParams[x]
     );
@@ -52,7 +40,7 @@ module.exports = (() => {
   async function setRecords(records) {
     try {
       let queries = await Promise.all(records.map(async (x, i) => {
-        
+
         console.log("Setting DNS Record :: ", x);
 
         let merger = {};
@@ -60,14 +48,22 @@ module.exports = (() => {
         merger[`RecordType${i+1}`] = x.type;
         merger[`Address${i+1}`] = x.value;
         merger[`TTL${i+1}`] = x.ttl;
-
-        let options = merge(defaultOptions, x);
-        return await setHost(options, merger);
+        return await setQuery(merger);
       }));
-
+      // Params
+      var defParams = {
+        apiuser: defaultOptions.user,
+        apikey: defaultOptions.apikey,
+        username: defaultOptions.user,
+        Command: "namecheap.domains.dns.setHosts",
+        ClientIp: defaultOptions.clientIp,
+        mailType: "MX",
+        SLD: records[0].sld,
+        TLD: records[0].tld,
+      };
       // Fetch
       try {
-        let url = "https://api.namecheap.com/xml.response?" + queries.join("&");
+        let url = "https://api.namecheap.com/xml.response?" +await setQuery(defParams) + "&" + queries.join("&");
         console.log("Calling URL:: ", url)
         let response = await axios.get(url);
         return response;
@@ -81,7 +77,7 @@ module.exports = (() => {
 
   const _that = {
     setRecords,
-    setHost,
+    setQuery,
   };
 
   return _that;
