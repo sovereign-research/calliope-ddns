@@ -1,8 +1,22 @@
 [{
-    "host": "www",
+        "host": "www",
         "sld": "example",
         "tld": "com",
         "type": "A",
+        "ttl": "100"
+    },
+    {
+        "host": "@",
+        "sld": "example",
+        "tld": "com",
+        "type": "A",
+        "ttl": "100"
+    },
+    {
+        "host": "@",
+        "sld": "example",
+        "tld": "com",
+        "type": "MX",
         "ttl": "100"
     }
 ]
