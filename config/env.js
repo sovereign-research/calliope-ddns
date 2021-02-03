@@ -15,5 +15,7 @@
 require('dotenv').config()
 module.exports = {
   DNS_APIKEY: process.env.DNS_APIKEY,
-  DNS_USERNAME: process.env.DNS_USERNAME
+  DNS_USERNAME: process.env.DNS_USERNAME,
+  DNS_IP: process.env.DNS_IP,
+  DNS_REGISTRAR: process.env.DNS_REGISTRAR
 };

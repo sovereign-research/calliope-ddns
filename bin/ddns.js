@@ -12,17 +12,22 @@
 \*                                                 */
 
 // List of DNS Records (Using Namecheap as Backend - Enable and Set in Environment) to Configure on Load
-const DNSClient = require("./DnsRegister");
+// const Namecheap = require("../registrars/Namecheap");
+const Env = require("../config/env");
 const axios = require("axios");
+const Registrar = require("../registrars/index")[Env.DNS_REGISTRAR];
 
 // DNS Records
-const domains = require("./domains.json");
-const getDomainRegistrations = async () => {
+// const example_com = require("../config/domains/example.com.json");
+const kderbyma_com = require("../config/domains/kderbyma.com.json");
+
+// Configure IP Addresses for Domains
+const getDomainRegistrations = async (domains) => {
   const IP = await axios('https://ifconfig.me');
   return domains.map((x) => {x.value = IP.data; return x})
 };
 
+// Configure DNS Records
 module.exports = (async () => {
-  // Configure DNS
-  DNSClient.setRecords(await getDomainRegistrations());
+  Registrar.setRecords(await getDomainRegistrations(kderbyma_com));
 })();

@@ -2,9 +2,9 @@
   "name": "calliope-ddns",
   "version": "1.0.0",
   "description": "Dynamic-DNS for Locally Hosting Calliope Website",
-  "main": "ddns.js",
+  "main": "bin/ddns.js",
   "scripts": {
-    "dns": "node ./ddns.js"
+    "dns": "node ./bin/ddns.js"
   },
   "repository": {
     "type": "git",

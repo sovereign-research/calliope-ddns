@@ -1,0 +1,8 @@
+[{
+    "host": "www",
+        "sld": "example",
+        "tld": "com",
+        "type": "A",
+        "ttl": "100"
+    }
+]

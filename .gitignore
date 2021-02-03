@@ -1,3 +1,4 @@
 node_modules/
+**/.env
+**/kderbyma.com.json
 .env
-domains.json

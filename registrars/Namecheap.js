@@ -11,7 +11,7 @@
 ** ----------------------------------------------- **
 \*                                                 */
 
-const Env = require("./env");
+const Env = require("../config/env");
 const axios = require("axios");
 
 module.exports = (() => {
@@ -28,9 +28,9 @@ module.exports = (() => {
   }
 
   // Set Host Command with Options Passed in
-  async function setHost(options) {
+  async function setHost(options, merger) {
     // Params
-    var queryParams = {
+    var defParams = {
       apiuser: options.user,
       apikey: options.apikey,
       username: options.user,
@@ -38,33 +38,42 @@ module.exports = (() => {
       ClientIp: options.clientIp,
       SLD: options.sld,
       TLD: options.tld,
-      HostName1: options.host,
-      RecordType1: options.type,
-      Address1: options.value,
-      TTL1: options.ttl,
     };
+
+    var queryParams = merge(defParams, merger);
 
     // Stringify
     let query = Object.keys(queryParams).map(
       (x) => "" + x + "=" + queryParams[x]
     );
-
-    // Fetch
-    try {
-      let response = await axios.get("https://api.namecheap.com/xml.response?" + query.join("&"));
-      return response;
-    } catch (e) {
-      console.error(e);
-    }
+    return query.join("&");
   }
 
-  function setRecords(records) {
+  async function setRecords(records) {
     try {
-      records.map(async (x) => {
+      let queries = await Promise.all(records.map(async (x, i) => {
+        
         console.log("Setting DNS Record :: ", x);
+
+        let merger = {};
+        merger[`HostName${i+1}`] = x.host;
+        merger[`RecordType${i+1}`] = x.type;
+        merger[`Address${i+1}`] = x.value;
+        merger[`TTL${i+1}`] = x.ttl;
+
         let options = merge(defaultOptions, x);
-        await setHost(options);
-      });
+        return await setHost(options, merger);
+      }));
+
+      // Fetch
+      try {
+        let url = "https://api.namecheap.com/xml.response?" + queries.join("&");
+        console.log("Calling URL:: ", url)
+        let response = await axios.get(url);
+        return response;
+      } catch (e) {
+        console.error(e);
+      }
     } catch (e) {
       console.error(e);
     }
