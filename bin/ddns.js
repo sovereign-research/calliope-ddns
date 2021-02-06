@@ -24,7 +24,7 @@ const kderbyma_com = require("../config/domains/kderbyma.com.json");
 // Configure IP Addresses for Domains
 const getDomainRegistrations = async (domains) => {
   const IP = await axios('https://ifconfig.me');
-  return domains.map((x) => {x.value = IP.data; return x})
+  return domains.map((x) => {if(!x.value) x.value = IP.data; return x})
 };
 
 // Configure DNS Records
